@@ -14,14 +14,10 @@
 
 @interface RBAppDelegate ()
 - (NSArray *)_testClassNames;
-- (NSTimeInterval)_measure:(void(^)(void))block;
 - (NSTimeInterval)_measureTime:(void(^)(void))block;
 @end
 
 @implementation RBAppDelegate
-
-#define RB_MESURE_ITERATIONS 1
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -72,14 +68,6 @@
         free(classes);
     }
     return testClassesArray;
-}
-
-- (NSTimeInterval)_measure:(void(^)(void))block {
-    NSTimeInterval total = 0;
-    for (int i = 0; i < RB_MESURE_ITERATIONS; i++) {
-        total += [self _measureTime:block];
-    }
-    return total / RB_MESURE_ITERATIONS;
 }
 
 - (NSTimeInterval)_measureTime:(void(^)(void))block {
